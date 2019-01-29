@@ -1,0 +1,52 @@
+//
+//   Copyright 2019  SenX S.A.S.
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//
+
+{
+  'name' 'PMMLLOAD'
+  'since' '1.0.0'
+  'deprecated' ''
+  'deleted' ''
+  'version' 'all'
+  'tags' [ 'extensions' ]
+  'desc' 
+    <'
+The `PMMLLOAD` function loads a [PMML](https://en.wikipedia.org/wiki/Predictive_Model_Markup_Language) model and pushes onto the stack a model evaluator which can later be used by `PMMLEVAL`.
+
+The model is parsed from a STRING pushed onto the stack or from a file located under the directory configured via `pmml.modelroot` and referenced via a STRING of the form `@file.pmml` pushed onto the stack.
+
+This extension makes use of the [JPMML Evaluator](https://github.com/jpmml/jpmml-evaluator) library for handling PMML models.
+
+Given this library is distributed under the [GNU AFFERO GPL](https://www.gnu.org/licenses/agpl-3.0.en.html) license, the PMML extension is distributed under the same license.
+    '>
+  'sig' [ [ [ 'model:STRING' ]  [ 'evaluator:PMMLEVALUATOR' ] ] ]
+  'params' {
+    'model' 'PMML definition of the model to load or a reference to a model file as `@file.pmml`.'
+    'evaluator' 'Evaluator for the given model.'
+  }
+  'related' [ 'PMMLEVAL' ]
+  'examples' [ 
+  ]
+  'conf' [ 'warpscript.extensions' 'pmml.modelroot' ]
+  'ext' 'io.warp10.script.ext.pmml.PMMLWarpScriptExtension'
+} 'info' STORE
+<%
+  !$info INFO
+  <%  'PMMLLOAD' EVAL %>
+  <% %> <% %> TRY
+%>
+'macro' STORE
+// Unit tests
+$macro
