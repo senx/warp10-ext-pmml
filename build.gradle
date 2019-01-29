@@ -58,7 +58,7 @@ def getVersionName(String revision) {
 
 project.ext.bintrayRepo = 'maven'
 project.ext.bintrayVcsUrl = 'htps://github.com/senx/warp10-ext-pmml'
-project.ext.bintrayLicenses = [ 'AGPL-3.0' ]
+project.ext.bintrayLicenses = [ 'AGPL-V3' ]
 
 //
 // GnuPG configuration for signing module
