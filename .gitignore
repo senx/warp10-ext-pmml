@@ -7,3 +7,5 @@
 *.ipr
 *.iws
 build/
+*.asc
+bin
