@@ -60,25 +60,40 @@ public class PMMLLOAD extends NamedWarpScriptFunction implements WarpScriptStack
     if (modelstr.startsWith("@")) {
       File root = PMMLWarpScriptExtension.getRoot();
       
-      if (null == root) {
+      if (null == root && !PMMLWarpScriptExtension.useClasspath()) {
         throw new WarpScriptException(getName() + " cannot load model from file, model root directory was not set.");
       }
       
-      File modelfile = new File(root, modelstr.substring(1));
-      
-      if (!modelfile.getAbsolutePath().startsWith(root.getAbsolutePath())) {
-        throw new WarpScriptException(getName() + " invalid path for model.");
-      }
-      
       InputStream in = null;
+
+      File modelfile = null;
       
+      if (null != root) {
+        modelfile = new File(root, modelstr.substring(1));
+      
+        if (!modelfile.getAbsolutePath().startsWith(root.getAbsolutePath())) {
+          throw new WarpScriptException(getName() + " invalid path for model.");
+        }        
+      }
+            
       try {
-        in = new FileInputStream(modelfile);
-      
+        if (null == modelfile || !modelfile.exists()) {
+          if (!PMMLWarpScriptExtension.useClasspath()) {
+            throw new WarpScriptException(getName() + " model could not be loaded.");
+          }
+          
+          in = WarpConfig.class.getClassLoader().getResourceAsStream(modelstr.substring(1));
+          if (null == in) {
+            throw new WarpScriptException(getName() + " model could not be found in class path ");
+          }
+        } else {
+          in = new FileInputStream(modelfile);
+        }
+
         pmml = PMMLUtil.unmarshal(in);
         
       } catch (Exception e) {
-        throw new WarpScriptException(getName() + " encountered an error while loading the model.", e);
+        throw new WarpScriptException(getName() + " encountered an error while loading model.", e);
       } finally {
         if (null != in) {
           try { in.close(); } catch (Exception e) {}
@@ -90,7 +105,7 @@ public class PMMLLOAD extends NamedWarpScriptFunction implements WarpScriptStack
       try {
         pmml = PMMLUtil.unmarshal(in);        
       } catch (Exception e) {
-        throw new WarpScriptException(getName() + " encountered an error while loading the model.", e);
+        throw new WarpScriptException(getName() + " encountered an error while loading model.", e);
       } finally {
         if (null != in) {
           try { in.close(); } catch (Exception e) {}
