@@ -34,10 +34,13 @@ public class PMMLWarpScriptExtension extends WarpScriptExtension {
   private static File root = null;
   
   private static final String MODEL_ROOT = "pmml.modelroot";
+  private static final String USE_CLASSPATH = "pmml.useclasspath";
   
   private static final ModelEvaluatorFactory mef;
   
-  static {
+  private static final boolean useClasspath;
+  
+  static {    
     functions = new HashMap<String,Object>();
     
     functions.put("PMMLEVAL", new PMMLEVAL("PMMLEVAL"));
@@ -54,6 +57,8 @@ public class PMMLWarpScriptExtension extends WarpScriptExtension {
       
       root = dir;
     }
+  
+    useClasspath = "true".equals(props.getProperty(USE_CLASSPATH));
     
     mef = ModelEvaluatorFactory.newInstance();    
   }
@@ -65,6 +70,10 @@ public class PMMLWarpScriptExtension extends WarpScriptExtension {
   
   static File getRoot() {
     return root;
+  }
+  
+  static boolean useClasspath() {
+    return useClasspath();
   }
   
   static ModelEvaluatorFactory getModelEvaluatorFactory() {
