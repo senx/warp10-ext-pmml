@@ -25,7 +25,7 @@
     <'
 The `PMMLLOAD` function loads a [PMML](https://en.wikipedia.org/wiki/Predictive_Model_Markup_Language) model and pushes onto the stack a model evaluator which can later be used by `PMMLEVAL`.
 
-The model is parsed from a STRING pushed onto the stack or from a file located under the directory configured via `pmml.modelroot` and referenced via a STRING of the form `@file.pmml` pushed onto the stack.
+The model is parsed from a STRING pushed onto the stack or from a file located under the directory configured via `pmml.modelroot` or the classpath if `pmml.useclasspath` is set to `true`. To load a model from a file, the parameter STRING must begin with an `@`, i.e. `@file.pmml`.
 
 This extension makes use of the [JPMML Evaluator](https://github.com/jpmml/jpmml-evaluator) library for handling PMML models.
 
@@ -39,7 +39,7 @@ Given this library is distributed under the [GNU AFFERO GPL](https://www.gnu.org
   'related' [ 'PMMLEVAL' ]
   'examples' [ 
   ]
-  'conf' [ 'warpscript.extensions' 'pmml.modelroot' ]
+  'conf' [ 'warpscript.extensions' 'pmml.modelroot' 'pmml.useclasspath' ]
   'ext' 'io.warp10.script.ext.pmml.PMMLWarpScriptExtension'
 } 'info' STORE
 <%
