@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import io.warp10.WarpConfig;
 import org.dmg.pmml.PMML;
 import org.jpmml.evaluator.ModelEvaluator;
 import org.jpmml.model.PMMLUtil;
