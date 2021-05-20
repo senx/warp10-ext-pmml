@@ -9,5 +9,5 @@
   "license": "AGPL-V3",
   "git": "https://github.com/senx/warp10-ext-pmml",
   "tags": "warpscript, warp 10, machine learning, IA, pmml  ",
-  "repoUrl": "https://dl.bintray.com/senx/maven/"
+  "repoUrl": "https://repo.maven.apache.org/maven2",
 }
